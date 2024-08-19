@@ -11,22 +11,33 @@
 
 // TODO: Use a `Box` in the enum definition to make the code compile.
 #[derive(PartialEq, Debug)]
+// enum List {
+//     Cons(&'static str, Box<List>),
+//     Nil,
+// }
+
 enum List {
-    Cons(i32, List),
-    Nil,
+        Cons(String, Box<List>),
+        Nil,
+    }
+
+use crate::List::{Cons, Nil};
+
+// TODO: Create a non-empty cons list.
+fn create_non_empty_list() -> List {
+    Cons("Hello".to_string(), Box::new(
+        Cons("There!".to_string(), Box::new(
+            Cons("General".to_string(), Box::new(
+                Cons("kenobi!".to_string(), Box::new(Nil))))))))
 }
 
 // TODO: Create an empty cons list.
 fn create_empty_list() -> List {
-    todo!()
-}
-
-// TODO: Create a non-empty cons list.
-fn create_non_empty_list() -> List {
-    todo!()
+    Nil
 }
 
 fn main() {
+
     println!("This is an empty cons list: {:?}", create_empty_list());
     println!(
         "This is a non-empty cons list: {:?}",

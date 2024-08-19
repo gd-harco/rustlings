@@ -1,0 +1,1 @@
+Map<core::slice::iter::Iter<'_, collections::hash::map::HashMap<String, Progress>>, {closure@exercises/18_iterators/iterators5.rs:54:45: 54:51}>

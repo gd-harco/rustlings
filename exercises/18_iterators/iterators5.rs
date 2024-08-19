@@ -6,7 +6,7 @@
 
 use std::collections::HashMap;
 
-#[derive(Clone, Copy, PartialEq, Eq)]
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
 enum Progress {
     None,
     Some,
@@ -28,6 +28,7 @@ fn count_for(map: &HashMap<String, Progress>, value: Progress) -> usize {
 fn count_iterator(map: &HashMap<String, Progress>, value: Progress) -> usize {
     // `map` is a hash map with `String` keys and `Progress` values.
     // map = { "variables1": Complete, "from_str": None, … }
+    map.values().filter(|val| **val == value).count()
 }
 
 fn count_collection_for(collection: &[HashMap<String, Progress>], value: Progress) -> usize {
@@ -42,12 +43,54 @@ fn count_collection_for(collection: &[HashMap<String, Progress>], value: Progres
     count
 }
 
+
 // TODO: Implement the functionality of `count_collection_for` but with an
 // iterator instead of a `for` loop.
-fn count_collection_iterator(collection: &[HashMap<String, Progress>], value: Progress) -> usize {
-    // `collection` is a slice of hash maps.
-    // collection = [{ "variables1": Complete, "from_str": None, … },
+fn count_collection_iterator(collections: &[HashMap<String, Progress>], value: Progress) -> usize {
+    // `collections` is a slice of hash maps.
+    // collections = [{ "variables1": Complete, "from_str": None, … },
     //               { "variables2": Complete, … }, … ]
+    let collection_iterator = collections.iter();
+    let map_count = collection_iterator
+    .map(|elem| count_iterator(elem, value));
+    // collections.iter().map(|x| x.values().filter(|val| **val == value).count()).sum()
+    map_count.sum()
+
+    // let vec: Vec<i32> = vec![];
+    // let mut iter = vec.iter();
+
+    // let elem = match iter.next() {
+    //     Some(elem) => *elem,
+    //     None => return None,
+    // };
+    // return elem;
+
+    // let Some(elem) = iter.next() else {
+    //       return None;
+    // };
+    // return elem;
+
+    // let elem = iter.next()?;
+    // return elem;
+
+    // if let Some(elem) = iter.next() {
+    //     return elem;
+    // }
+    // return None;
+
+
+    // let result: Result<i32, &'static str> = Ok(42);
+
+    // let test = result
+    //     .map_err(|err| "Merde: ".to_string() + err)
+    //     .map_err(|err|
+    //         err.chars()
+    //             .filter(|c| *c != 'M')
+    //             .collect::<String>()
+    //     )?;
+
+
+    // todo!()
 }
 
 fn main() {
@@ -55,6 +98,7 @@ fn main() {
 }
 
 #[cfg(test)]
+
 mod tests {
     use super::*;
 
